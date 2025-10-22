@@ -1,0 +1,149 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <%= image_tag "favicon.png", class: "logo-round" %>
+    </a>
+
+    <!-- Custom script to handle burger -->
+    <script>
+      function toggleMenu() {
+        var menu = document.querySelector('.navbar-menu');
+        menu.classList.toggle('active');
+      }
+
+      function openModal() {
+        var modal = document.querySelector('.modal');
+        modal.classList.add('is-active');
+      }
+
+      function closeModal() {
+        var modal = document.querySelector('.modal');
+        modal.classList.remove('is-active');
+      }
+
+      function closeAllModals() {
+        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+          closeModal($modal);
+        });
+      }
+
+      // Add a keyboard event to close all modals
+      document.addEventListener('keydown', (event) => {
+        if(event.key === "Escape") {
+          closeAllModals();
+        }
+      });
+//});
+    </script>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick="toggleMenu()">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <!--
+      <a class="navbar-item" href="/about">
+        About
+      </a>
+      -->
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/guides" >
+          Guides
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/guides">
+            Browser
+          </a>
+          <% if logged_in? %>
+            <a class="navbar-item" href="/guides/new">
+              Write
+            </a>
+          <% end %>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="/contacts">
+            Contact
+          </a>
+        </div>
+      </div>
+      <a class="navbar-item" href="/about" >
+        About
+      </a>
+      <!--
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/about" >
+          About
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item p-1 small-icon-hover" href="/cv" >
+            <%= image_tag "me.png", class: "logo-round" %>
+            CV
+          </a>
+          <a class="navbar-item p-1 small-icon-hover" href="https://www.linkedin.com/in/oskar-franck-7b34aa1b6" target="_blank">
+            <%= image_tag "linkedin.png", class: "logo-round" %>
+            Linkedin
+          </a>
+          <a class="navbar-item p-1 small-icon-hover" href="https://github.com/OskarFranck" target="_blank">
+            <%= image_tag "github.png", class: "logo-round" %>
+            Github
+          </a>
+        </div>
+      </div>
+      -->
+    </div>
+
+    <div class="navbar-end">
+      <%= form_with url: "/search", method: :get, class: "navbar-item field has-addons mb-0" do |form| %>
+        <%= form.search_field :query, class: "input", placeholder: "Seach..." %>
+        <%= form.select(:search_category, [["Guides", "guides"]], {}, {class: "hidden-search search-form-select select"}) %>
+        <%= form.button type: "submit", name: nil, class: "button" do %>
+          <%= image_tag "mag4.png", alt: "Submit" %>
+        <% end %>
+      <% end %>
+      <div class="navbar-item">
+        <!-- if login in -->
+        <% if !logged_in? %>
+          <!--<a role="button" class="button is-primary" data-target="loginModal" onClick="openModal()">
+            Login
+            </a>
+        -->
+          <a role="button" class="button is-primary" href="/login">
+            Login
+          </a>
+        <% else %>
+
+            <!--
+          <div class="navbar-item hasdropdown ishoverable">
+            <a class="navbarlink button is-link" href="/users/<%=current_user[:id]%>" >
+              <%= current_user[:name] %>
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="/users/<%=current_user[:id]%>/guides">
+                Articles
+              </a>
+              <a class="navbar-item" href="/guides/new">
+                Write
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="/users/<%=current_user[:id]%>/subscriptions">
+                Subscriptions
+              </a>
+            </div>
+          </div>
+            -->
+          <a role="navbar-item button" class="button is-link ml-0" href="/users/<%=current_user[:id]%>">
+            <%= current_user[:name] %>
+          </a>
+          <a role="navbar-item button" class="button is-warning ml-2" href="/logout">
+            Sign out
+          </a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="bg-dark">
+  <head>
+    <title><%= content_for(:title) || "Gof" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"></script>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <!--
+      correct way to add favicons:
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    -->
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag asset_path('favicon.png'), id: 'favicon' %>
+  </head>
+  <body id="search-results" class="bg-dark">
+
+    <% flash.each do |key, message| %>
+      <section class="hero is-small <%= flash_class_for(key) %> is-bold"
+           data-controller="flash"
+           data-action="click->flash#close"
+           data-flash-timeout-value="4000"
+           style="cursor: pointer;">
+        <div class="hero-body py-2">
+          <div class="container is-flex is-justify-content-space-between is-align-items-center">
+            <div class="is-flex-grow-1 has-text-centered has-text-white">
+              <%= message %>
+            </div>
+            <button type="button"
+                class="delete is-medium ml-4"
+                data-action="click->flash#close click->flash#stopPropagation">
+            </button>
+          </div>
+        </div>
+      </section>
+    <% end %>
+    <%= render "shared/navbar" %>
+    <%= yield %>
+    <%= render "shared/footer" %>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="container">
+    </br>
+    <p class="has-text-white has-text-centered">
+    <%= @user.name %>
+    </p>
+  </div>
+  <div class="container">
+    <p class="has-text-centered">
+      About
+    </p>
+  </div>
+  <div class="container">
+    <a href="/users/<%= params[:id] %>/guides">
+      <p class="has-text-centered">
+        Articles
+      </p>
+    </a>
+  </div>
+</section>

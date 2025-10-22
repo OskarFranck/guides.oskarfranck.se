@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  gof-rails:
+    build:
+      context: .
+    command: >
+      bash -c 'bundle exec rake assets:precompile && bin/rails s -p 3000 -b 0.0.0.0'
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: gof-db
+    ports:
+    - "3000:3000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - gof-db 
+  gof-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - gof_db:/var/lib/postgresql/data
+
+volumes:
+  gof_db:
+    driver: local

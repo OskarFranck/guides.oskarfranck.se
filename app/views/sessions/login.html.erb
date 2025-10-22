@@ -1,0 +1,18 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title has-text-white has-text-centered">
+      Login
+    </h1>
+    <div class="columns">
+      <div class="column is-half is-offset-one-quarter">
+        <%= form_with url: "/login", class: "",data: {turbo: false}, method: :post do |form| %>
+          <%= form.text_field :name, class: "input mb-1", autofocus: true, placeholder: "Your email" %>
+          <%= form.password_field :password, class: "input mt-1", placeholder: "Password" %>
+          <div class="buttons mt-2">
+            <%= form.submit "Login", type: "submit", class: "button is-success" %>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <div class="column is-three-fifths is-offset-one-fifth">
+        <% if @guide %>
+          <h1 class="title is-1 has-text-centered has-text-white"><%= @guide.title %></h1>
+          <p class="has-text-centered has-text-white is-size-7"> Published <%= @guide.created_at %></p>
+          </br>
+          <p class="has-text-centered has-text-white"><%= @guide.title %></p>
+          </br>
+          <p class="has-text-centere has-text-white"><%= @guide.introduction %></p>
+          <hr class=solid">
+          <p class="has-text-centere has-text-white display-whitespace"><%= @guide.body.html_safe %></p>
+          </br>
+          </br>
+          <div class="buttons mt-2">
+            <%= link_to "Back", :back, class: "button is-info" %>
+          
+            <% if logged_in? && current_user[:id] == @guide.creator_id %>
+                <%= link_to "Edit", edit_guide_path(@guide), class: "button is-warning" %>
+                <%= button_to "Delete", @guide, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "button is-warning" %>
+            <% end %>
+          </div>
+        <% else %>
+          <h1>No article available</h1>
+          <%= link_to "Back", :guides, class: "button is-info" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+

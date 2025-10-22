@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  gof-rails:
+    image: gof_rails
+      #command: >
+      #bash -c 'bundle exec rake assets:precompile && bin/rails s -p 3005 -b 0.0.0.0'
+    command: >
+      bash -c 'export RAILS_MASTER_KEY=$$(cat /run/secrets/gof_rails_master_key | tr -d "\n") &&
+        bundle exec rake assets:precompile && bin/rails s -p 3005 -b 0.0.0.0'
+    environment:
+      RAILS_ENV: production
+      #RAILS_MASTER_KEY: "dummy"
+      RAILS_SERVE_STATIC_FILES: "true"
+    secrets:
+      - gof_rails_master_key
+    volumes:
+      - ./:/app
+    networks:
+      - traefik-public
+    depends_on:
+      - gof-db 
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.gof-rails.rule=Host(`guides.oskarfranck.se`)
+        - traefik.http.routers.gof-rails.entrypoints=websecure
+        - traefik.http.routers.gof-rails.tls.certresolver=myresolver
+        - traefik.http.services.gof-rails.loadbalancer.server.port=3005
+  gof-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD_FILE: /run/secrets/gof_postgres_password
+    volumes:
+      - gof_db:/var/lib/postgresql/data
+    secrets:
+      - gof_postgres_password
+    networks:
+      - traefik-public
+
+secrets:
+  gof_postgres_password:
+    external: true
+  gof_rails_master_key:
+    external: true
+
+volumes:
+  gof_db:
+    driver: local
+
+networks:
+  traefik-public:
+    external: true

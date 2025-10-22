@@ -1,0 +1,45 @@
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <div class="column is-three-fifths is-offset-one-fifth">
+        <input class="input" type="text" id="search" name="search"
+             placeholder="<%= @search_text || "Begin Typing To Search Guides..." %>" value="<%= @search_text %>" 
+             hx-get="<%= request.path %>"
+             hx-trigger="input changed delay:500ms, search" 
+             hx-target="#search-results" 
+             hx-indicator=".htmx-indicator"
+             hx-swap="innerHTML">
+      </div>
+    </div>
+  </div>
+  </br>
+  <script>
+    htmx.process(document.querySelector('#search'))
+  </script>
+  <% @guides.each do |article| %>
+    <div class="container">
+      <div class="columns is-multiline">
+        <div class="column is-three-fifths is-offset-one-fifth">
+          <a href="/guides/<%= article[:id] %>">
+            <div class='show-hidden-content main-card-background box'>
+              <div class="card-content card-basic-size">
+                <p class="title is-4 has-text-grey-light has-text-centered mb-2"><%= article[:title] %></p>
+                <p class="content has-text-grey-light has-text-centered">Written by <%= article.creator.name %></p>
+                <div class="content has-text-white has-text-centered">
+                  <%= article[:introduction] %>
+                </div>
+                <!--
+                <% if logged_in? %>
+                  <div class="hidden-content content has-text-white has-text-centered">
+                    <%= article[:description] %>
+                  </div>
+                <% end %>
+                -->
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</section>

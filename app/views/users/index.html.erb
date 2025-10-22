@@ -1,0 +1,24 @@
+<section class="section">
+  <div class="container">
+    </br>
+    <p class="title has-text-white has-text-centered">
+      Writers
+    </p>
+  </div>
+  </br>
+  <% @users.each do |user| %>
+    <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-half is-offset-one-quarter">
+            <a href="/users/<%= user[:id] %>">
+              <div class='show-hidden-content main-card-background box'>
+                <div class="card-content card-basic-size">
+                  <p class="title is-4 has-text-grey-light has-text-centered"><%= user[:name] %></p>
+                  </div>
+                </div>
+              </div>
+            </a>
+        </div>
+    </div>
+  <% end %>
+</section>

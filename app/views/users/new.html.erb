@@ -1,0 +1,19 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title has-text-white has-text-centered">
+      Create user
+    </h1>
+    <div class="columns">
+      <div class="column is-half is-offset-one-quarter">
+        <%= form_for @user, data: {turbo: false} do |form| %>
+          <%= form.text_field :name, class: "input mb-1", autofocus: true, placeholder: "Your name" %>
+          <%= form.email_field :email, class: "input", placeholder: "Your email" %>
+          <%= form.password_field :password, class: "input mt-1", placeholder: "Password" %>
+          <div class="buttons mt-2">
+            <%= form.submit "Create", type: "submit", class: "button is-success" %>
+          </div>
+        <% end %>
+      </div >
+    </div">
+  </div>
+</section>

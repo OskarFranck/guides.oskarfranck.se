@@ -1,0 +1,16 @@
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <% if logged_in? && @guide %>
+        <div class="column is-half is-offset-one-quarter ">
+          <h1 class="title has-text-white text-is-centered">
+            Edit article
+          </h1>
+          <%= render "form", guide: @guide %>
+        </div>
+      <% else %>
+        <%= render "errors/not_allow_to_create" %>
+      <% end %>
+    </div>
+  </div>
+</section>
