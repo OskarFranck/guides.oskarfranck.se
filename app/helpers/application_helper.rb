@@ -7,9 +7,6 @@ module ApplicationHelper
     @current_user ||= User.find_by_id(session[:user_id]) if !!session[:user_id] 
   end
 
-  def current_user_name
-    
-  end
   def flash_class_for(type)
     {
       notice: "is-info",

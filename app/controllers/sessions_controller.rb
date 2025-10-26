@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  
+  skip_before_action :require_login, only: [:create, :login]
+
   def create
     @user = User.find_by(name: params[:name])
 
@@ -14,7 +15,7 @@ class SessionsController < ApplicationController
       #redirect_to login_path, notice: message
     end
   end
- 
+
   def destroy
     session.clear
     flash[:info] = "Session destroyed"

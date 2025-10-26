@@ -1,5 +1,5 @@
 class GuidesController < ApplicationController
-  include SessionsHelper
+  skip_before_action :require_login, only: [:index, :show]
 
   def index
 
@@ -18,7 +18,11 @@ class GuidesController < ApplicationController
   end
 
   def show
-    @guide = Guide.where(id: params[:id]).first
+    unless logged_in?
+      @guide = Guide.where(is_draft: false).and(Guide.where(id: params[:id])).first
+    else
+      @guide = Guide.where(id: params[:id]).first
+    end
     ## find users name for displaying author
     ## if statement is only to prevent error when search results return articles you are not allowd to see, rm when fixed
     unless @guide
@@ -79,7 +83,7 @@ class GuidesController < ApplicationController
       end
     else
 
-      flash[:alert] = "Not allowed to write articles" 
+      flash[:alert] = "Not allowed to edit articles" 
       redirect_back_or_to guides_path 
     end
   end
