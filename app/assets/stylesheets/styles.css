@@ -1,3 +1,7 @@
+.about-text {
+    white-space: pre-wrap;
+}
+
 .has-background-code {
     border-radius: 10px;
     border: 1px solid transparent;
@@ -77,6 +81,8 @@ hr.solid {
 
 .logo-round {
   border-radius: 50%;
+  height: 30px;
+  width: 30px;
 }
 
 .navbar-menu.active {
@@ -98,8 +104,12 @@ hr.solid {
   border-radius: 10px;
 }
 
+.small-icon {
+  height: 30px;
+  width: 30px;
+}
 
-.small-icon-hover:hover {
+.small-icon:hover {
   height: 2.40rem;
 }
 .main-card-background {

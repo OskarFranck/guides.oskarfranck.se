@@ -24,7 +24,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
-        - traefik.http.routers.gof-rails.rule=Host(`guides.oskarfranck.se`)
+        - traefik.http.routers.gof-rails.rule=Host(`guides.oskarfranck.se`, `oskarfranck.se`)
         - traefik.http.routers.gof-rails.entrypoints=websecure
         - traefik.http.routers.gof-rails.tls.certresolver=myresolver
         - traefik.http.services.gof-rails.loadbalancer.server.port=3005

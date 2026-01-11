@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   #
   
   get '/about', to: 'about#index'
+  get '/cv', to: 'cv#index'
 
   resources :guides
 
